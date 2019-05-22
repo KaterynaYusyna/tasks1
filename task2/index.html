@@ -1,0 +1,173 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>TASK3</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .main__form {
+            width: 250px;
+            margin: 50px auto;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        input {
+            border: 1px solid #ccc;
+            width: 100%;
+            display: block;
+            margin-bottom: 20px;
+            height: 50px;
+            padding: 0 15px;
+        }
+        
+        form > div {
+            width: 100%;
+        }
+
+        button {
+            background: #000;
+            color: #fff;
+            text-align: center;
+            width: 100%;
+            display: block;
+            margin-bottom: 20px;
+            height: 50px;
+            padding: 0 15px;
+            border: none;
+        }
+
+        button.locked {
+            opacity: 0.5;
+        }
+        
+        .input__error {
+            display: block;
+            text-align: center;
+            width: 100%;
+            color: red;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="main__form">
+        <form name="regist">
+            <div><input type="text" placeholder="Your Email" name="email" id="mail">
+                <span id="error" class="input__error"></span>
+            </div>
+            <div><input type="password" placeholder="Password" name="pass1" id="pass1"><span id="error2" class="input__error"></span></div>
+            <div><input type="password" placeholder="Repeat password" name="pass2" id="pass2"><span id="error3" class="input__error"></span></div>
+            <button class="locked" name="button">Send</button>
+        </form>
+    </div>
+</body>
+<script type="text/javascript">
+    function validateForm() {
+        let formElement = document.regist;
+        let emailInput = document.regist.email;
+        let pass1Input = document.regist.pass1;
+        let pass2Input = document.regist.pass2;
+        let buttonElement = document.regist.button;
+        let error3 = document.getElementById('error3');
+        let error2 = document.getElementById('error2');
+        let error1 = document.getElementById('error');
+        let inputes = document.getElementsByTagName('input');
+        
+        
+        emailInput.onkeyup = function() {
+            if (emailInput.value.length < 1) {
+                error1.innerHTML = ('Поле не должно быть пустым!');
+            } else if (emailInput.value.includes('@') != true ) {
+                error1.innerHTML = ('Поле должно иметь знак "@"!');
+            } else if (emailInput.value.includes('.') != true ) {
+                error1.innerHTML = ('Поле должно иметь знак "."!');
+            } else {
+                error1.innerHTML = ('');
+                this.classList.add('valid');
+            }
+        };
+        
+        pass1Input.onkeyup = function() {
+            if (pass1Input.value.length < 1) {
+                error2.innerHTML = ('Поле не должно быть пустым!');
+            } else if (pass1Input.value.length < 8) {
+                error2.innerHTML = ('Поле должно сожержать не менее 8 символов!');
+            } else if (pass1Input.value.search(/\d/) == -1) {
+                error2.innerHTML = ('Поле должно сожержать 1 цифру!');
+            } else if (pass1Input.value.search(/[A-Z|А-Я]/) == -1) {
+                error2.innerHTML = ('Поле должно сожержать 1 заглавнвную букву!');
+            } else {
+                error2.innerHTML = ('');
+                this.classList.add('valid');
+            }
+        };
+        
+        pass2Input.onkeyup = function() {
+            if (pass2Input.value.length < 1) {
+                error3.innerHTML = ('Поле не должно быть пустым!');
+            } else if (pass2Input.value.length < 8) {
+                error3.innerHTML = ('Поле должно сожержать не менее 8 символов!');
+            } else if (pass2Input.value.search(/\d/) == -1) {
+                error3.innerHTML = ('Поле должно сожержать 1 цифру!');
+            } else if (pass2Input.value.search(/[A-Z|А-Я]/) == -1) {
+                error3.innerHTML = ('Поле должно сожержать 1 заглавнвную букву!');
+            } else if (pass1Input.value != pass2Input.value) {
+                error3.innerHTML = ('Пароли не совпадают!!');
+            } else {
+                error3.innerHTML = ('');
+                this.classList.add('valid');
+            }
+        };
+        
+        // знаю шо таке собі рішення, але по іншоому не виходить
+        
+        for(var i=0; i<inputes.length;i++){
+            inputes[inputes.length - 1].addEventListener('keyup', isLocked);
+        }
+        function isLocked(){
+            if(this.classList.contains('valid')) {
+                buttonElement.classList.remove('locked');
+            } else {
+                buttonElement.classList.add('locked');
+            }
+        }
+        
+        // ще така була ідея
+        
+//        let isValid = false;
+//        for(let i=0; i<inputes.length;i++){
+//            if (inputes[i].classList.contains('valid')) {
+//                isValid = true
+//            }
+//        }
+//        function isLocked(){
+//            if(isValid) {
+//                buttonElement.classList.remove('locked');
+//            } else {
+//                buttonElement.classList.add('locked');
+//            }
+//        }
+//        isLocked();
+
+    };
+    
+    
+    validateForm();
+    
+</script>
+
+</html>
